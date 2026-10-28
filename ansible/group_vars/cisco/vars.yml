@@ -1,0 +1,6 @@
+---
+ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: cisco.ios.ios
+# Lab dang dung tai khoan admin. Nen doi sang tai khoan rieng cho tu dong hoa.
+ansible_user: admin
+ansible_password: "{{ vault_ansible_password }}"

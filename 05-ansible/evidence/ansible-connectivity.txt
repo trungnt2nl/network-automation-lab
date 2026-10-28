@@ -1,0 +1,38 @@
+# $ ansible cisco -m cisco.ios.ios_command -a "commands='show ip interface brief'" --ask-vault-pass
+SW1 | SUCCESS => {
+    "changed": false,
+    "stdout_lines": [
+        [
+            "Interface              IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0            unassigned      YES unset  up                    up      ",
+            "Ethernet0/1            unassigned      YES unset  up                    up      ",
+            "Ethernet0/2            unassigned      YES unset  up                    up      ",
+            "Ethernet0/3            unassigned      YES unset  up                    up      ",
+            "Vlan1                  192.168.141.61  YES NVRAM  up                    up"
+        ]
+    ]
+}
+R1 | SUCCESS => {
+    "changed": false,
+    "stdout_lines": [
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                192.168.141.62  YES NVRAM  up                    up      ",
+            "Ethernet0/1                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet0/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet0/3                unassigned      YES NVRAM  administratively down down"
+        ]
+    ]
+}
+R2 | SUCCESS => {
+    "changed": false,
+    "stdout_lines": [
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                192.168.141.63  YES NVRAM  up                    up      ",
+            "Ethernet0/1                unassigned      YES NVRAM  down                  down    ",
+            "Ethernet0/2                unassigned      YES NVRAM  down                  down    ",
+            "Ethernet0/3                unassigned      YES NVRAM  down                  down"
+        ]
+    ]
+}

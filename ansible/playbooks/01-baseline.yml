@@ -1,0 +1,23 @@
+---
+- name: Chuan hoa cau hinh nen cho thiet bi Cisco
+  hosts: cisco
+  gather_facts: false
+
+  tasks:
+    - name: Dat cac dong cau hinh chung
+      cisco.ios.ios_config:
+        lines:
+          - service timestamps debug datetime msec
+          - service timestamps log datetime msec
+          - "{{ no_domain_lookup_line }}"
+          - logging buffered 16384
+          - ip ssh version 2
+        save_when: modified
+
+    - name: Dat banner canh bao
+      cisco.ios.ios_banner:
+        banner: motd
+        text: |
+          *** THIET BI LAB - CHI NGUOI DUOC PHAN QUYEN ***
+          Moi thao tac deu duoc ghi log.
+        state: present

@@ -1,0 +1,76 @@
+# Kho Git cua Oxidized: sudo git -c safe.directory='*' --git-dir=oxidized/oxidized.git log --oneline
+
+## Sau khi sua cau hinh SW1 (them description cho cong e0/1, e0/2)
+7140750 (HEAD -> master) update /SW1
+c79e2e4 update /R2
+dfc5bd6 update /R1
+422ba16 update /SW1
+
+## Sau khi chay playbook Ansible 01-baseline.yml (Oxidized sao luu lai ca 3 thiet bi)
+44caf2b (HEAD -> master) update /SW1
+058bfd3 update /R1
+1929ebe update /R2
+0fdf251 update /SW1
+58ea466 update /SW1
+7140750 update /SW1
+c79e2e4 update /R2
+dfc5bd6 update /R1
+422ba16 update /SW1
+
+## Diff cua commit 7140750 (thay doi cau hinh thu cong tren SW1)
+commit 71407507104123792670ba690ed4baf62d0f9cf7 (HEAD -> master)
+Author: Oxidized <oxidized@lab.local>
+Date:   Wed Oct 28 09:42:13 2026 +0700
+
+    update /SW1
+
+diff --git a/SW1 b/SW1
+index 58c7629..05e5e48 100644
+--- a/SW1
++++ b/SW1
+@@ -26,6 +26,7 @@
+ ! VTP:                                     0x56 0x9D 0x4A 0x3E 0xA5 0x69 0x35 0xBC
+ !
+ !
++!
+ version 15.1
+ service timestamps debug datetime msec
+@@ -80,9 +81,11 @@ interface Ethernet0/0
+  duplex auto
+ !
+ interface Ethernet0/1
++ description TO-R1
+  duplex auto
+ !
+ interface Ethernet0/2
++ description TO-R2
+  duplex auto
+ !
+ interface Ethernet0/3
+
+## Diff cua commit 058bfd3 (R1, sau khi Ansible chay playbook lan dau; output bi cat khi sao chep)
+commit 058bfd3dbedd734a670ec4b9fb2824a2755074c5
+Author: Oxidized <oxidized@lab.local>
+Date:   Wed Oct 28 11:13:58 2026 +0700
+
+    update /R1
+
+diff --git a/R1 b/R1
+index 20a8b9b..c41f073 100644
+--- a/R1
++++ b/R1
+@@ -12,6 +12,8 @@
+ ! VTP: show vtp status
+ !
+ !
++! Last configuration change at 04:05:59 UTC Wed Oct 28 2026 by admin
++!
+ version 15.4
+ service config
+ service timestamps debug datetime msec
+@@ -25,6 +27,7 @@ boot-end-marker
+ !
+ aqm-register-fnf
+ !
++logging buffered 16384
+ !

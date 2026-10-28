@@ -1,0 +1,30 @@
+# Khong dua thong tin nhay cam len GitHub
+.env
+*.env
+*.key
+*.pem
+*.lic
+*password*
+*secret*
+!*.example
+*.pcap
+*.pcapng
+
+# Mat khau thiet bi / vault (chi dua file .example)
+ansible/group_vars/cisco/vault.yml
+.vault_pass*
+
+# Oxidized: file config that co mat khau, va kho Git chua cau hinh that cua thiet bi
+# (cau hinh co community SNMP, hash mat khau, nen khong commit)
+docker/oxidized/config
+docker/oxidized/oxidized.git/
+docker/oxidized/pid
+docker/oxidized/logs/
+
+# Nhat ky thu nghiem
+pm.log
+pm_test*.py
+
+# Rac he thong
+.DS_Store
+Thumbs.db

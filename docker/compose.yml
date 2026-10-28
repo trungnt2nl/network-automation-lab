@@ -1,0 +1,94 @@
+name: librenms
+
+# LibreNMS (giam sat) + Oxidized (sao luu cau hinh) chay bang Docker Compose.
+# Mat khau va mui gio doc tu file .env (khong dua len GitHub). Xem .env.example.
+
+x-librenms-common: &librenms-common
+  image: librenms/librenms:latest
+  restart: unless-stopped
+  environment: &librenms-env
+    TZ: ${TZ}
+    PUID: 1000
+    PGID: 1000
+    DB_HOST: db
+    DB_NAME: librenms
+    DB_USER: librenms
+    DB_PASSWORD: ${DB_PASSWORD}
+    DB_TIMEOUT: 60
+    REDIS_HOST: redis
+    CACHE_DRIVER: redis
+    SESSION_DRIVER: redis
+  volumes:
+    - librenms-data:/data
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: librenms-db
+    restart: unless-stopped
+    command:
+      - mysqld
+      - --innodb-file-per-table=1
+      - --lower-case-table-names=0
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    environment:
+      TZ: ${TZ}   # bat buoc: neu thieu, MariaDB chay gio UTC va LibreNMS bao loi lech gio
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: librenms
+      MYSQL_USER: librenms
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: librenms-redis
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  librenms:
+    <<: *librenms-common
+    container_name: librenms
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  dispatcher:
+    <<: *librenms-common
+    container_name: librenms-dispatcher
+    environment:
+      <<: *librenms-env
+      SIDECAR_DISPATCHER: "1"
+      DISPATCHER_NODE_ID: dispatcher1
+    depends_on:
+      - librenms
+
+  oxidized:
+    image: oxidized/oxidized:latest
+    container_name: oxidized
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ}
+    ports:
+      - "8888:8888"
+    volumes:
+      # thu muc chua config, router.db va kho Git (oxidized.git)
+      - ./oxidized:/home/oxidized/.config/oxidized
+
+volumes:
+  db-data:
+  librenms-data:

@@ -1,0 +1,21 @@
+# Khoi phuc R1 bang playbook (sau khi sua tay: no logging buffered + doi banner)
+# $ ansible-playbook playbooks/01-baseline.yml --ask-vault-pass
+TASK [Dat cac dong cau hinh chung]
+ok: [SW1]
+ok: [R2]
+changed: [R1]
+
+TASK [Dat banner canh bao]
+ok: [SW1]
+ok: [R2]
+changed: [R1]
+
+PLAY RECAP
+R1  : ok=2  changed=2  unreachable=0  failed=0
+R2  : ok=2  changed=0  unreachable=0  failed=0
+SW1 : ok=2  changed=0  unreachable=0  failed=0
+
+# Chay lai sau khi khoi phuc: idempotent tren ca 3 thiet bi
+R1  : ok=2  changed=0  unreachable=0  failed=0
+R2  : ok=2  changed=0  unreachable=0  failed=0
+SW1 : ok=2  changed=0  unreachable=0  failed=0

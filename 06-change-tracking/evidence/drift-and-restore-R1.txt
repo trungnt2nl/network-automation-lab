@@ -1,0 +1,70 @@
+# $ sudo git -c safe.directory='*' --git-dir=oxidized/oxidized.git log -p -2 -- R1
+# (output bi cat o cuoi khi sao chep; phan banner cua commit f8db112 nam o doan sau cua diff,
+#  duoc xac nhan boi diff khoi phuc ben tren: dong "-banner motd ^CSAI CAU HINH - SUA TAY^C")
+
+## Commit khoi phuc (Ansible chay lai playbook) - 14:50:29
+commit abd06511bd976d40bab2f17cd52b8ba87821cf68 (HEAD -> master)
+Author: Oxidized <oxidized@lab.local>
+Date:   Wed Oct 28 14:50:29 2026 +0700
+
+    update /R1
+
+diff --git a/R1 b/R1
+index b663cac..961dc36 100644
+--- a/R1
++++ b/R1
+@@ -12,6 +12,7 @@
+ ! VTP: show vtp status
+ !
+ !
++! Last configuration change at 07:50:07 UTC Wed Oct 28 2026 by admin
+ !
+ version 15.4
+ service config
+@@ -26,7 +27,7 @@ boot-end-marker
+ !
+ aqm-register-fnf
+ !
+-no logging buffered
++logging buffered 16384
+ !
+ no aaa new-model
+ mmi polling-interval 60
+@@ -119,7 +120,10 @@ control-plane
+ !
+ !
+ !
+-banner motd ^CSAI CAU HINH - SUA TAY^C
++banner motd ^C
++*** THIET BI LAB - CHI NGUOI DUOC PHAN QUYEN ***
++Moi thao tac deu duoc ghi log.
++^C
+ !
+ line con 0
+  logging synchronous
+
+## Commit ghi nhan cau hinh bi sua tay (lech chuan) - 14:49:28
+commit f8db1126e85a2ffb2e90ef0d78ba71b7ed38c81f
+Author: Oxidized <oxidized@lab.local>
+Date:   Wed Oct 28 14:49:28 2026 +0700
+
+    update /R1
+
+diff --git a/R1 b/R1
+index cff0d79..b663cac 100644
+--- a/R1
++++ b/R1
+@@ -12,6 +12,7 @@
+ ! VTP: show vtp status
+ !
+ !
++!
+ version 15.4
+ service config
+ service timestamps debug datetime msec
+@@ -25,7 +26,7 @@ boot-end-marker
+ !
+ aqm-register-fnf
+ !
+-logging buffered 16384
++no logging buffered

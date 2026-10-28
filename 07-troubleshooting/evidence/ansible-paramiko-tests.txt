@@ -1,0 +1,21 @@
+# Loi Ansible: Failed to authenticate: Authentication failed: transport shut down or saw EOF
+# Phien ban: ansible-core 2.20.1, paramiko 4.0.0, Python 3.14.4
+
+## Script paramiko dang nhap thang vao SW1 (khong thu khoa SSH, khong dung agent)
+LOGIN OK
+# Nhat ky paramiko cho thay thiet bi thuong luong duoc:
+#   Kex: diffie-hellman-group-exchange-sha1
+#   HostKey: ssh-rsa
+#   Cipher: aes128-cbc
+#   MAC: hmac-sha1
+#   Authentication (password) successful!
+# => Khong phai van de thuat toan SSH cu.
+
+## Script thu 3 to hop tuy chon (cung tai khoan, cung mat khau)
+A: khong thu khoa, khong dung agent -> LOGIN OK
+B: co thu khoa, khong dung agent    -> LOI: AuthenticationException Authentication failed: transport shut down or saw EOF
+C: co thu khoa, co dung agent       -> LOI: AuthenticationException Authentication failed: transport shut down or saw EOF
+
+## Cach sua (ansible.cfg), sau do ca 3 thiet bi tra ve SUCCESS
+[paramiko_connection]
+look_for_keys = False

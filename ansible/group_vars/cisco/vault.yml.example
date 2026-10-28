@@ -1,0 +1,4 @@
+# Tao file that bang:  EDITOR=nano ansible-vault create group_vars/cisco/vault.yml
+# Noi dung (se duoc ma hoa), vault.yml that nam trong .gitignore:
+---
+vault_ansible_password: "<MAT_KHAU_THIET_BI>"

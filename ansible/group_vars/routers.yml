@@ -1,0 +1,4 @@
+---
+# Router IOL (IOS 15.4) luu cung lenh nay voi dau cach.
+# Ansible so sanh CHUOI chu voi running-config, viet sai dang thi moi lan chay deu "changed".
+no_domain_lookup_line: "no ip domain lookup"

@@ -1,0 +1,23 @@
+# Cac bang PLAY RECAP cua playbooks/01-baseline.yml theo thu tu thoi gian
+# (rut gon: chi giu cac cot ok, changed, unreachable, failed)
+
+## 1. Lan chay that dau tien: ca hai task thay doi tren ca 3 thiet bi
+R1  : ok=2  changed=2  unreachable=0  failed=0
+R2  : ok=2  changed=2  unreachable=0  failed=0
+SW1 : ok=2  changed=2  unreachable=0  failed=0
+
+## 2. Chay lai lan dau: router van changed=1 (lenh "no ip domain-lookup" bi router luu thanh "no ip domain lookup")
+##    Kem canh bao: To ensure idempotency and correct diff the input configuration lines should be
+##    similar to how they appear if present in the running configuration on device
+R1  : ok=2  changed=1  unreachable=0  failed=0
+R2  : ok=2  changed=1  unreachable=0  failed=0
+SW1 : ok=2  changed=0  unreachable=0  failed=0
+
+## 3. Doi chieu dang hien thi tren thiet bi (show running-config | include domain)
+SW1: no ip domain-lookup / ip domain-name lab.local
+R1 : no ip domain lookup / ip domain name lab.local
+
+## 4. Sau khi tach bien theo nhom (group_vars/switches.yml, group_vars/routers.yml): idempotent
+R1  : ok=2  changed=0  unreachable=0  failed=0
+R2  : ok=2  changed=0  unreachable=0  failed=0
+SW1 : ok=2  changed=0  unreachable=0  failed=0

@@ -1,0 +1,37 @@
+# Sao chep thanh `config` (cung thu muc) roi dien tai khoan that.
+# File `config` that co mat khau -> da nam trong .gitignore.
+# Sau khi tao: sudo chown -R 30000:30000 docker/oxidized && sudo chmod 600 docker/oxidized/config
+---
+username: <TEN_TAI_KHOAN>        # lab nay dung "admin"; nen dung tai khoan rieng (xem 07-troubleshooting)
+password: <MAT_KHAU>
+model: ios
+interval: 3600                   # sao luu moi 3600 giay
+threads: 5
+timeout: 20
+retries: 2
+rest: 0.0.0.0:8888               # giao dien web + REST API
+use_syslog: false
+debug: false
+pid: /home/oxidized/.config/oxidized/pid
+
+input:
+  default: ssh
+  ssh:
+    secure: false                # khong ep kiem tra host key (chi cho lab)
+
+output:
+  default: git
+  git:
+    user: Oxidized
+    email: oxidized@lab.local
+    repo: /home/oxidized/.config/oxidized/oxidized.git
+
+source:
+  default: csv
+  csv:
+    file: /home/oxidized/.config/oxidized/router.db
+    delimiter: !ruby/regexp /:/
+    map:
+      name: 0
+      ip: 1
+      model: 2
